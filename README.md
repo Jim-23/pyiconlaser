@@ -152,6 +152,12 @@ limits_off()
 
 get_preview()
 ```
+---
+
+## Tested Environment
+
+- Python 3.14.4
+- TYKMA ICON Interface 1.0.12.6 on Windows 11
 
 ---
 
