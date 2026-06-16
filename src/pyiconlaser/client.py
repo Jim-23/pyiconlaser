@@ -3,7 +3,7 @@
 import requests
 
 from .enums import JobStatus, MachineState
-from .exceptions import (IconLaserConnectionError, InvalidResponseError, JobLoadError, JobEnableError, )
+from .exceptions import (IconLaserConnectionError, InvalidResponseError, JobLoadError, JobEnableError, SetIDError, )
 
 
 class IconLaserClient:
@@ -83,9 +83,29 @@ class IconLaserClient:
 
     # --- ID MANAGEMENT ---
 
-    def all_ids(self) -> dict[str, str]: ...
+    def all_ids(self) -> dict[str, str]:
+        response = self._request("all_ids")
+        
+        _, values = response.split(":", 1)
 
-    def set_id(self, id_name: str, value: str) -> None: ...
+        if not values:
+            return {}
+        
+        result = {}
+
+        for item in values.split(","):
+            key, value = item.split(":", 1)
+            result[key] = value
+        
+        return result
+
+
+    def set_id(self, id_name: str, value: str) -> None:
+        response = self._request(f"set_id?id={id_name}&data={value}")
+
+        if response.lower() != "set_id:ok":
+            raise SetIDError(f"Failed to set ID '{id_name}': {response}")
+
 
     # --- LASER CONTROL ---
 
