@@ -11,7 +11,7 @@ class ConnectionError(IconLaserError):
     pass
 
 
-class IvnalidResponseError(IconLaserError):
+class InvalidResponseError(IconLaserError):
     """Raised when API returns unexpected response."""
     pass
 

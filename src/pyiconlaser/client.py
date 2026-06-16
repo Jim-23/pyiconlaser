@@ -1,7 +1,9 @@
 # src/pyiconlaser/client.py
 
+import requests
 
 from .enums import JobStatus, MachineState
+from .exceptions import (ConnectionError, InvalidResponseError, )
 
 
 class IconLaserClient:
@@ -9,6 +11,24 @@ class IconLaserClient:
         self.host = host
         self.port = port
         self.timeout = timeout
+
+        self.base_url = f"http://{host}:{port}"
+
+    def _request(self, endpoint: str) -> str:
+        try:
+            response = requests.get(f"{self.base_url}/{endpoint}", timeout=self.timeout,)
+            response.raise_for_status()
+
+            return response.text.strip()
+
+        except requests.RequestException as e:
+            raise ConnectionError(f"Failed to connect to ICON Interface: {e}") from e
+
+    def _expect_ok(self, endpoint: str, expected: str) -> None:
+        response = self._request(endpoint)
+
+        if response.lower() != expected.lower():
+            raise InvalidResponseError(f"Expected '{expected}', got '{response}'")
     
     # --- INFO ---
 
