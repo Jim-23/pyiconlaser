@@ -106,6 +106,14 @@ does both automatically.
 
 ---
 
+python
+sdk
+laser
+industrial-automation
+automation
+hardware
+http-api
+wrapper
 ## Basic Example
 
 ```python
