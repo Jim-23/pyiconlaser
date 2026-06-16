@@ -23,3 +23,4 @@ laser = IconLaserClient(host="localhost")
 - start() -> None
 - stop() -> None
 - get_preview() -> bytes
+
