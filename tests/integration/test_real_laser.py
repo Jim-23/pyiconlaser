@@ -1,6 +1,8 @@
 """Integration tests that run against a real laser running ICON Interface.
 
-These tests require physical hardware and are skipped by default. Run them with:
+These tests require physical hardware and are skipped by default. They drive a
+single physical laser and must be run serially (do not use ``pytest-xdist``).
+Run them with:
 
     pytest --run-integration
 
@@ -19,9 +21,13 @@ pytestmark = pytest.mark.integration
 
 @pytest.fixture(autouse=True)
 def _clear_after(laser):
-    """Ensure the laser is left in a clean state after each test."""
+    """Best-effort cleanup that leaves the laser in a clean state after each test."""
     yield
-    laser.clear_job()
+    try:
+        laser.clear_job()
+    except Exception:
+        # Cleanup is best-effort: a failure here must not mask the test result.
+        pass
 
 
 def test_load_job(laser, job_name):
