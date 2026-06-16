@@ -165,6 +165,41 @@ get_preview()
 
 ---
 
+## Testing
+
+Unit tests run without any hardware:
+
+```bash
+pytest
+```
+
+Integration tests communicate with a **real laser** running ICON Interface and
+are skipped by default. Enable them with the `--run-integration` flag:
+
+```bash
+pytest --run-integration
+```
+
+The target hardware is configured through environment variables:
+
+| Variable | Description | Default |
+| --- | --- | --- |
+| `ICON_LASER_HOST` | ICON Interface host | `localhost` |
+| `ICON_LASER_PORT` | ICON Interface port | `5287` |
+| `ICON_LASER_TIMEOUT` | Request timeout (seconds) | `5` |
+| `ICON_LASER_JOB` | Marking job to run (required) | — |
+| `ICON_LASER_ID_NAME` | ID field to set | `SN` |
+| `ICON_LASER_ID_VALUE` | ID value to set | `TEST123` |
+
+```bash
+ICON_LASER_HOST=192.168.0.10 ICON_LASER_JOB=test_job pytest --run-integration
+```
+
+> Integration tests will physically operate the laser. Only run them on a
+> system that is safe to mark.
+
+---
+
 ## License
 
 MIT License
