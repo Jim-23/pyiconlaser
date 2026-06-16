@@ -6,7 +6,7 @@ class IconLaserError(Exception):
     pass
 
 
-class ConnectionError(IconLaserError):
+class IconLaserConnectionError(IconLaserError):
     """Raised when connection to ICON interface fails."""
     pass
 

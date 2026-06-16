@@ -3,7 +3,7 @@
 import requests
 
 from .enums import JobStatus, MachineState
-from .exceptions import (ConnectionError, InvalidResponseError, )
+from .exceptions import (IconLaserConnectionError, InvalidResponseError, )
 
 
 class IconLaserClient:
@@ -22,7 +22,7 @@ class IconLaserClient:
             return response.text.strip()
 
         except requests.RequestException as e:
-            raise ConnectionError(f"Failed to connect to ICON Interface: {e}") from e
+            raise IconLaserConnectionError(f"Failed to connect to ICON Interface: {e}") from e
 
     def _expect_ok(self, endpoint: str, expected: str) -> None:
         response = self._request(endpoint)
@@ -32,13 +32,29 @@ class IconLaserClient:
     
     # --- INFO ---
 
-    def version(self) -> str: ...
+    def version(self) -> str:
+        return self._request("version")
 
-    def job_status(self) -> JobStatus: ...
+    def job_status(self) -> JobStatus:
+        response = self._request("job_status")
 
-    def loaded_job(self) -> str | None: ...
+        _, value = response.split(":", 1)
 
-    def state(self) -> MachineState: ...
+        return JobStatus(value)
+
+    def loaded_job(self) -> str | None:
+        response = self._request("loaded_job")
+
+        _, value = response.split(":", 1)
+
+        return value if value else None
+
+    def state(self) -> MachineState:
+        response = self._request("state")
+
+        _, value = response.split(":", 1)
+
+        return MachineState(value)
 
     # --- JOB MANAGEMENT ---
 
