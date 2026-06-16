@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyiconlaser"
+version = "0.1.0"
+authors = [
+    { name = "Jesse Sadowý", email="jesse.sadowy23@gmail.com" },
+]
+description = "Unofficial Python wrapper for the TYCMA ICON Interface HTTP TCPIP API for laser marking systems."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31.0"
+]
+keywords = [
+    "laser",
+    "industrial",
+    "http-api",
+    "automation",
+    "marking"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Libraries",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/jim-23/pyiconlaser"
+Repository = "https://github.com/jim-23/pyiconlaser"
+Issues = "https://github.com/jim-23/pyiconlaser/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
