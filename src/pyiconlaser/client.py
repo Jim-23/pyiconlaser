@@ -3,7 +3,15 @@
 import requests
 
 from .enums import JobStatus, MachineState
-from .exceptions import (IconLaserConnectionError, InvalidResponseError, JobLoadError, JobEnableError, SetIDError, )
+from .exceptions import (
+    IconLaserConnectionError, 
+    InvalidResponseError, 
+    JobLoadError, 
+    JobEnableError, 
+    SetIDError, 
+    StartMarkingError, 
+    StopMarkingError, 
+)
 
 
 class IconLaserClient:
@@ -109,14 +117,33 @@ class IconLaserClient:
 
     # --- LASER CONTROL ---
 
-    def start(self) -> None: ...
+    def start(self) -> None:
+        response = self._request("start")
 
-    def stop(self) -> None: ...
+        if response.lower() != "start:ok":
+            raise StartMarkingError(f"Failed to start marking: {response}")
 
-    def limits_on(self) -> None: ...
+    def stop(self) -> None:
+        response = self._request("stop")
 
-    def limits_off(self) -> None: ...
+        if response.lower() != "stop:ok":
+            raise StopMarkingError(f"Failed to stop marking: {response}")
+
+    def limits_on(self) -> None:
+        self._expect_ok("limits_on", "limits_on:ok")
+
+    def limits_off(self) -> None:
+        self._expect_ok("limits_off", "limits_off:ok")
+
 
     # --- PREVIEW ---
 
-    def get_preview(self) -> bytes: ...
+    def get_preview(self) -> bytes:
+        try:
+            response = requests.get(f"{self.base_url}/get_preview", timeout=self.timeout)
+
+            response.raise_for_status()
+            return response.content
+        
+        except requests.RequestException as e:
+            raise IconLaserConnectionError(f"Failed to get preview {e}") from e
