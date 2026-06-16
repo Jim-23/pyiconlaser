@@ -3,7 +3,7 @@
 import requests
 
 from .enums import JobStatus, MachineState
-from .exceptions import (IconLaserConnectionError, InvalidResponseError, )
+from .exceptions import (IconLaserConnectionError, InvalidResponseError, JobLoadError, JobEnableError, )
 
 
 class IconLaserClient:
@@ -29,7 +29,8 @@ class IconLaserClient:
 
         if response.lower() != expected.lower():
             raise InvalidResponseError(f"Expected '{expected}', got '{response}'")
-    
+
+
     # --- INFO ---
 
     def version(self) -> str:
@@ -56,15 +57,29 @@ class IconLaserClient:
 
         return MachineState(value)
 
+
     # --- JOB MANAGEMENT ---
 
-    def load_job(self, job_name: str) -> None: ...
+    def load_job(self, job_name: str) -> None:
+        response = self._request(f"load_job?{job_name}")
 
-    def prepare_job(self, job_name: str) -> None: ...
+        if response.lower() != "job_load:ok":
+            raise JobLoadError(f"Failed to load job '{job_name}': {response}")
 
-    def clear_job(self) -> None: ...
+    def prepare_job(self, job_name: str) -> None:
+        self.load_job(job_name)
+        self.limits_off()
 
-    def enable_job(self) -> None: ...
+
+    def clear_job(self) -> None:
+        self._expect_ok("clear_job", "clear:ok")
+
+    def enable_job(self) -> None:
+        response = self._request("enable_job")
+
+        if response.lower() != "enable_job:ok":
+            raise JobEnableError(f"Failed to enable job: {response}")
+
 
     # --- ID MANAGEMENT ---
 
