@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyiconlaser"
-version = "0.1.0"
+version = "0.2.0"
 authors = [
     { name = "Jesse Sadowý", email="jesse.sadowy23@gmail.com" },
 ]
@@ -13,12 +13,6 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "requests>=2.31.0"
-]
-
-[project.optional-dependencies]
-dev = [
-    "pytest>=7.0",
-    "python-dotenv>=1.0.0"
 ]
 keywords = [
     "laser",
@@ -41,6 +35,12 @@ classifiers = [
 ]
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "python-dotenv>=1.0.0"
+]
 
 [project.urls]
 Homepage = "https://github.com/jim-23/pyiconlaser"
