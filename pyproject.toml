@@ -8,7 +8,7 @@ version = "0.2.1"
 authors = [
     { name = "Jesse Sadowý", email="jesse.sadowy23@gmail.com" },
 ]
-description = "Unofficial Python wrapper for the TYCMA ICON Interface HTTP TCPIP API for laser marking systems."
+description = "Python wrapper for the TYCMA ICON Interface HTTP TCPIP API for laser marking systems."
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [

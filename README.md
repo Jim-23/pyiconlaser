@@ -4,7 +4,7 @@
 ![Python](https://img.shields.io/pypi/pyversions/pyiconlaser)
 ![License](https://img.shields.io/pypi/l/pyiconlaser)
 
-Unofficial Python wrapper for the TYKMA ICON Interface HTTP/TCP API used by industrial laser marking systems.
+Python wrapper for the TYKMA ICON Interface HTTP/TCP API used by industrial laser marking systems.
 
 This library provides a simple Python API for controlling compatible laser marking systems through the ICON Interface software.
 
@@ -30,7 +30,7 @@ This library provides a simple Python API for controlling compatible laser marki
 
 This library requires the vendor software **TYKMA ICON Interface** to be installed and running on the target machine.
 
-The HTTP/TCP API must also be enabled manually in the `Config.xml` configuration file.
+The HTTP/TCP API must also be enabled manually in the `Config.xml` configuration file (see the vendor documentation for the software).
 
 **Before using this library:**
 
