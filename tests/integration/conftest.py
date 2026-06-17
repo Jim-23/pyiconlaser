@@ -1,8 +1,12 @@
 import os
 
 import pytest
+from dotenv import load_dotenv
 
 from pyiconlaser import IconLaserClient
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 @pytest.fixture(scope="session")

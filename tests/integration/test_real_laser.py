@@ -66,7 +66,7 @@ def test_start(laser, job_name, id_name, id_value):
     laser.set_id(id_name, id_value)
     laser.enable_job()
 
-    laser.start()
+    #laser.start() -- uncomment this if you need to also test the marking itself, for safety reasons its commented
 
     assert laser.job_status() == JobStatus.MARKED
 

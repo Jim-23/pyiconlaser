@@ -180,7 +180,38 @@ are skipped by default. Enable them with the `--run-integration` flag:
 pytest --run-integration
 ```
 
-The target hardware is configured through environment variables:
+### Configuration
+
+The target hardware is configured through environment variables. You can set them in two ways:
+
+**Option 1: Using a `.env` file (recommended)**
+
+Copy `.env.example` to `.env` and update with your hardware details:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and set your values:
+
+```
+ICON_LASER_HOST=192.168.0.10
+ICON_LASER_PORT=5287
+ICON_LASER_TIMEOUT=5
+ICON_LASER_JOB=test_job
+ICON_LASER_ID_NAME=SN
+ICON_LASER_ID_VALUE=TEST123
+```
+
+The `.env` file is automatically loaded during testing and is not committed to git.
+
+**Option 2: Setting inline with the command**
+
+```bash
+ICON_LASER_HOST=192.168.0.10 ICON_LASER_JOB=test_job pytest --run-integration
+```
+
+### Environment Variables Reference
 
 | Variable | Description | Default |
 | --- | --- | --- |
@@ -190,10 +221,6 @@ The target hardware is configured through environment variables:
 | `ICON_LASER_JOB` | Marking job to run (required) | — |
 | `ICON_LASER_ID_NAME` | ID field to set | `SN` |
 | `ICON_LASER_ID_VALUE` | ID value to set | `TEST123` |
-
-```bash
-ICON_LASER_HOST=192.168.0.10 ICON_LASER_JOB=test_job pytest --run-integration
-```
 
 > Integration tests will physically operate the laser. Only run them on a
 > system that is safe to mark.
