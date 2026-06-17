@@ -30,13 +30,15 @@ This library provides a simple Python API for controlling compatible laser marki
 
 This library requires the vendor software **TYKMA ICON Interface** to be installed and running on the target machine.
 
-The HTTP/TCP API must also be enabled manually in the `Config.xml` configuration file (see the vendor documentation for the software).
+The HTTP/TCP API must also be enabled manually in the `Config.xml` configuration file.
 
 **Before using this library:**
 
 - Install TYKMA ICON Interface software  
   - Vendor contact may be required to obtain the software and API documentation
 - Enable HTTP/TCP communication in `Config.xml`
+  - default path: `C:\tykma\custom\Tykma_Icon\config.xml`
+  - see the vendor documentation for the software
 - Verify the API is accessible (default port `5287`)
 - Ensure the laser system is connected and recognized by ICON Interface
 
